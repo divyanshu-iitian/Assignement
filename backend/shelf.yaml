@@ -1,0 +1,5 @@
+names:
+  0: product
+path: c:\Users\user\Desktop\Assignement\backend\dataset
+train: images/train
+val: images/train
