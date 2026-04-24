@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>YOLOv8 Detection</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="page">
+      <section class="panel">
+        <h1>YOLOv8 Product Detection</h1>
+        <p>Upload an image and run object detection from your FastAPI backend.</p>
+
+        <div class="controls">
+          <label class="file-input" for="imageInput">Choose Image</label>
+          <input id="imageInput" type="file" accept="image/*" />
+
+          <label for="confidenceRange">Confidence: <span id="confidenceValue">0.25</span></label>
+          <input id="confidenceRange" type="range" min="0.05" max="0.95" step="0.05" value="0.25" />
+
+          <button id="detectButton" type="button">Run Detection</button>
+          <p id="error" class="error"></p>
+        </div>
+      </section>
+
+      <section class="results" id="resultsSection" hidden>
+        <div class="image-stage" id="imageStage">
+          <img id="preview" class="preview" alt="Selected image preview" />
+        </div>
+
+        <div class="summary">
+          <h2>Detections</h2>
+          <p>Total: <span id="totalCount">0</span></p>
+          <ul id="detectionList"></ul>
+        </div>
+      </section>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
