@@ -4,6 +4,10 @@ import cv2
 import yaml
 from pathlib import Path
 
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+BACKEND_DIR = Path(__file__).resolve().parent
+
 def _iou(a, b):
     ax1, ay1, ax2, ay2 = a
     bx1, by1, bx2, by2 = b
@@ -152,7 +156,7 @@ def create_dataset():
     print("Creating dataset from sample images using OpenCV fallback detector...")
     
     # Paths
-    base_dir = Path("c:/Users/user/Desktop/Assignement")
+    base_dir = BASE_DIR
     src_images_dir = base_dir / "sample_images" / "sample_images"
     
     dataset_dir = base_dir / "backend" / "dataset"
@@ -234,7 +238,7 @@ def train_yolo(yaml_path):
         data=str(yaml_path),
         epochs=10,
         imgsz=640,
-        project="runs",
+        project=str(BACKEND_DIR / "runs"),
         name="shelf_detector",
         exist_ok=True
     )

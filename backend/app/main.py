@@ -1,4 +1,5 @@
 from threading import Lock
+from pathlib import Path
 from typing import Any
 
 from fastapi import FastAPI, File, HTTPException, Query, UploadFile
@@ -19,6 +20,10 @@ app.add_middleware(
 _model_lock = Lock()
 _model: Any | None = None
 _model_load_error: str | None = None
+
+BACKEND_DIR = Path(__file__).resolve().parent.parent
+CUSTOM_MODEL_PATH = BACKEND_DIR / "runs" / "shelf_detector" / "weights" / "best.pt"
+DEFAULT_MODEL = "yolov8n.pt"
 
 
 def _iou(a: tuple[int, int, int, int], b: tuple[int, int, int, int]) -> float:
@@ -230,7 +235,8 @@ def get_model() -> Any:
                 try:
                     from ultralytics import YOLO
 
-                    _model = YOLO("yolov8n.pt")
+                    model_path = CUSTOM_MODEL_PATH if CUSTOM_MODEL_PATH.exists() else DEFAULT_MODEL
+                    _model = YOLO(str(model_path))
                 except Exception as exc:  # noqa: BLE001
                     _model_load_error = str(exc)
                     raise RuntimeError(_model_load_error) from exc
